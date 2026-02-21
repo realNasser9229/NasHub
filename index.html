@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>N∆SHUB | NasHub</title>
+    <style>
+        /* Base & Font */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Animated Gradient Background */
+        body {
+            min-height: 100vh;
+            background: linear-gradient(-45deg, #ff3b3b, #ffb347, #3b8dff);
+            background-size: 400% 400%;
+            animation: gradientBG 12s ease infinite;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Header Styles */
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            animation: fadeInDown 1s ease;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            margin-bottom: 0.2rem;
+        }
+
+        .subheader {
+            font-size: 1.2rem;
+            font-weight: 300;
+            opacity: 0.9;
+            letter-spacing: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Filter Controls */
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 3rem;
+            animation: fadeIn 1.2s ease;
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 10px 24px;
+            font-size: 1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .filter-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+            background: rgba(255, 255, 255, 0.35);
+            border-color: rgba(255, 255, 255, 0.6);
+            font-weight: 600;
+            box-shadow: 0 4px 20px rgba(255,255,255,0.2);
+        }
+
+        /* Grid Layout for Cards */
+        .hub-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 24px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: popIn 0.5s ease forwards;
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .card-header {
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .card-category {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 15px;
+        }
+
+        /* Status Badges */
+        .status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .status.active {
+            background: rgba(46, 213, 115, 0.2);
+            color: #2ed573;
+            border: 1px solid rgba(46, 213, 115, 0.4);
+        }
+        .status.inactive {
+            background: rgba(255, 71, 87, 0.2);
+            color: #ff4757;
+            border: 1px solid rgba(255, 71, 87, 0.4);
+        }
+
+        /* Download/Link Button */
+        .action-btn {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.9);
+            color: #ff4757; /* Matches gradient theme */
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: auto;
+        }
+
+        .action-btn:hover {
+            background: #ffffff;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+            transform: scale(1.03);
+        }
+
+        /* Keyframes for animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes popIn {
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            h1 { font-size: 3rem; }
+            .hub-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>N∆SHUB</h1>
+        <div class="subheader">Made by RazNas</div>
+    </header>
+
+    <div class="filters" id="filters">
+        <button class="filter-btn active" data-filter="All">All</button>
+        <button class="filter-btn" data-filter="OpenOro">OpenOro</button>
+        <button class="filter-btn" data-filter="Modded">Modded</button>
+        <button class="filter-btn" data-filter="Personal Project">Personal Project</button>
+        <button class="filter-btn" data-filter="Games">Games</button>
+        <button class="filter-btn" data-filter="Chatting, Messaging">Chatting, Messaging</button>
+    </div>
+
+    <div class="hub-container" id="hub-container">
+        </div>
+
+    <script>
+        // Data structure for your projects
+        const projects = [
+            {
+                title: "Nerry AI",
+                category: "OpenOro",
+                status: "active",
+                url: "https://www.mediafire.com/file/sex5daprkbur1jh/NerryAI.apk/file",
+                actionText: "Download APK"
+            },
+            {
+                title: "Nasoro AI",
+                category: "OpenOro",
+                status: "inactive",
+                url: "https://realnasser9229.github.io/NasoroAI/",
+                actionText: "Visit Web"
+            },
+            {
+                title: "VelVet Browser",
+                category: "Personal Project",
+                status: "active",
+                url: "https://www.mediafire.com/file/snplstsm9fzg3z2/VelVetBrowser-debug.apk/file",
+                actionText: "Download APK"
+            },
+            {
+                title: "DabbaDoo3D",
+                category: "Games",
+                status: "active",
+                url: "https://www.mediafire.com/file/uswh0b9ypp8zgsy/Downloading_APK/file",
+                actionText: "Download APK"
+            },
+            {
+                title: "BananaWorld",
+                author: "by Bananski",
+                category: "Chatting, Messaging",
+                status: "inactive",
+                url: "https://www.mediafire.com/file/86jy1pb7sdhlcp5/BananaWorld.apk/file",
+                actionText: "Download APK"
+            },
+            {
+                title: "Shades Client",
+                category: "Modded",
+                status: "active",
+                url: "https://www.mediafire.com/file/oiwqgxllu9cz0rm/Shades-Client-3.0.7-Stable.apk/file",
+                actionText: "Download APK"
+            }
+        ];
+
+        const container = document.getElementById('hub-container');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+
+        // Function to render cards
+        function renderCards(filterCategory) {
+            container.innerHTML = ''; // Clear current cards
+            
+            const filteredProjects = filterCategory === 'All' 
+                ? projects 
+                : projects.filter(p => p.category === filterCategory);
+
+            filteredProjects.forEach((project, index) => {
+                const isInactive = project.status === 'inactive';
+                const statusClass = isInactive ? 'inactive' : 'active';
+                const statusLabel = isInactive ? 'Unmaintained / Inactive' : 'Active / Maintained';
+                
+                // Add a small delay so they animate in one by one (cascade effect)
+                const animationDelay = `${index * 0.1}s`;
+
+                const cardHTML = `
+                    <div class="glass-card" style="animation-delay: ${animationDelay};">
+                        <div class="card-header">
+                            <div class="card-title">
+                                ${project.title} 
+                                ${project.author ? `<span style="font-size:0.9rem; font-weight:400; opacity:0.8;">${project.author}</span>` : ''}
+                            </div>
+                            <div class="card-category">${project.category}</div>
+                            <div class="status ${statusClass}">${statusLabel}</div>
+                        </div>
+                        <a href="${project.url}" target="_blank" rel="noopener noreferrer" class="action-btn">
+                            ${project.actionText}
+                        </a>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', cardHTML);
+            });
+        }
+
+        // Initial render
+        renderCards('All');
+
+        // Filter button event listeners
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                // Remove active class from all
+                filterBtns.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked
+                e.target.classList.add('active');
+                // Re-render
+                renderCards(e.target.getAttribute('data-filter'));
+            });
+        });
+    </script>
+</body>
+</html>
